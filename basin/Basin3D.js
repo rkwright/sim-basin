@@ -6,7 +6,7 @@
  */
 
 BASIN3D = {
-    revision : 'r02',
+    revision : '2.0',
     MIN_ORDER : 3
 };
 

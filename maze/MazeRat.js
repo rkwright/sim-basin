@@ -4,8 +4,11 @@
  * Copyright 2017, All rights reserved.
  *
  */
+var MazeRat = {
+    revision: '1.0'
+};
 
-MAZE.MazeRat = function( maze ) {
+MazeRat.MazeRat = function( maze ) {
 
     this.bSuccess = false;			// true if search was successful
     this.bSac = false;				// true if last cell was cul-de-sac
@@ -22,7 +25,7 @@ MAZE.MazeRat = function( maze ) {
     this.maze = maze;
 };
 
-MAZE.MazeRat.prototype = {
+MazeRat.MazeRat.prototype = {
 
     /**
      * Init the rat for the search
@@ -50,7 +53,7 @@ MAZE.MazeRat.prototype = {
         this.mouseStack = [];		    // mouse-values stack
 
         // push seed on stack
-        this.stack.push(new MAZE.Coord(this.maze.seedX, this.maze.seedY));
+        this.stack.push(new Maze.Coord(this.maze.seedX, this.maze.seedY));
 
         return true;
 },
@@ -98,15 +101,15 @@ MAZE.MazeRat.prototype = {
             this.bSac = true;
             for ( var k=0; k<4; k++ )
             {
-                zx = px + MAZE.XEdge[k];
-                zy = py + MAZE.YEdge[k];
+                zx = px + Maze.XEdge[k];
+                zy = py + Maze.YEdge[k];
 
                 if ( zx >= 0 && zx < this.maze.col && zy >= 0 && zy < this.maze.row &&
                       (this.maze.cells[zy * this.maze.row + zx] & this.mask) !== 0 &&
                       ((mazval & (1 << k)) === 0) )
                 {
                     this.bSac = false;
-                    this.stack.push(new MAZE.Coord(zx, zy));
+                    this.stack.push(new Maze.Coord(zx, zy));
 
                     //this.report("    addStack",  px,  py,  zx,  zy,  this.stack.length, false);
                 }
@@ -149,7 +152,7 @@ MAZE.MazeRat.prototype = {
             this.retraceSteps();
         else
             // if NOT a cul-de-sac, then save position  on stack
-            this.mouseStack.push(new MAZE.Coord(posx,posy));
+            this.mouseStack.push(new Maze.Coord(posx,posy));
     },
 
     /**
@@ -206,7 +209,7 @@ MAZE.MazeRat.prototype = {
 
                 if ( adjacent && !this.last_step )  {
                     // see if the way is open..
-                    edg = MAZE.EdgeIndx[msy+1][msx+1];
+                    edg = Maze.EdgeIndx[msy+1][msx+1];
 
                     if ((adjacent = ((mazval & (1 << edg))) === 0))
                         this.mouseStack.push(coord);   // was mouseIndex++;  ??

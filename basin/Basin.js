@@ -6,7 +6,7 @@
  */
 
 var BASIN = {
-            revision : 'r02',
+            revision : '2.0',
             QNUMER   :  1.0,	// numerator of slope f(Q) eqn.
             QEXPON   : -0.15,    // exponent of slope f(Q) eqn
             QINTCP   :  2.0,    // offset for slope f(Q) eqn

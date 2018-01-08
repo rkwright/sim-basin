@@ -5,8 +5,8 @@
  *
  */
 
-var MAZE = {
-    revision: 'r02',
+var Maze = {
+    revision: '2.0',
 
     // cardinal directions
     SOUTH : 0,
@@ -35,7 +35,7 @@ var MAZE = {
  * @param x
  * @param y
  */
-MAZE.Coord = function( x, y ) {
+Maze.Coord = function( x, y ) {
 
     this.x = x;
     this.y = y;
@@ -50,7 +50,7 @@ MAZE.Coord = function( x, y ) {
  * @param seedX - x-index of seed cell
  * @param seedY - y-index of seed cell
  */
-MAZE.Maze = function ( col, row, seedX, seedY ) {
+Maze.Maze = function ( col, row, seedX, seedY ) {
 
     this.neighbors = [];
     this.maxNeighbors = 0;	// just for info's sake
@@ -106,7 +106,7 @@ MAZE.Maze = function ( col, row, seedX, seedY ) {
     } */
 };
 
-MAZE.Maze.prototype = {
+Maze.Maze.prototype = {
 
     /**
      * Builds the maze.  basically, it just starts with the seed and visits
@@ -115,7 +115,7 @@ MAZE.Maze.prototype = {
      */
     build: function () {
 
-        var coord = new MAZE.Coord( this.seedX, this.seedY );
+        var coord = new Maze.Coord( this.seedX, this.seedY );
 
         do {
 
@@ -146,8 +146,8 @@ MAZE.Maze.prototype = {
 
         for ( var i=0; i<4; i++ ) {
 
-            zx = x + MAZE.XEdge[i];
-            zy = y + MAZE.YEdge[i];
+            zx = x + Maze.XEdge[i];
+            zy = y + Maze.YEdge[i];
 
             // if indicies in range and cell still zero then the cell is still in the "src list"
             if (zx >= 0 && zx < this.col && zy >= 0 && zy < this.row
@@ -156,7 +156,7 @@ MAZE.Maze.prototype = {
                 // set the upper bits to indicate that this cell has been "found"
                 this.cells[zy * this.row + zx] = 0xf0;
 
-                this.neighbors.push(new MAZE.Coord(zx,zy));
+                this.neighbors.push(new Maze.Coord(zx,zy));
 
                 //console.log("Adding to neighbors: " + zx.toFixed(0) + " " + zy.toFixed(0));
 
@@ -189,11 +189,11 @@ MAZE.Maze.prototype = {
 
         for ( var i=0; i<4; i++ ) {
 
-            zx = x + MAZE.XEdge[i];
-            zy = y + MAZE.YEdge[i];
+            zx = x + Maze.XEdge[i];
+            zy = y + Maze.YEdge[i];
 
             // if indicies in range and cell has been visited, push it on the local stack
-            cellVal = this.cells[zy * this.row + zx] & MAZE.OppEdgeBit[i];
+            cellVal = this.cells[zy * this.row + zx] & Maze.OppEdgeBit[i];
             if ( zx >= 0 && zx < this.col && zy >= 0 && zy < this.row && cellVal !== 0 ) {
 
                 edgeRay.push( i );
@@ -204,11 +204,11 @@ MAZE.Maze.prototype = {
 
             var n = this.getRandomInt(0, edgeRay.length);
             edg = edgeRay[n];
-            zx  = x + MAZE.XEdge[edg];
-            zy  = y + MAZE.YEdge[edg];
+            zx  = x + Maze.XEdge[edg];
+            zy  = y + Maze.YEdge[edg];
 
-            this.cells[y * this.row + x]   ^= MAZE.EdgeBit[edg];
-            this.cells[zy * this.row + zx] ^= MAZE.OppEdgeBit[edg];
+            this.cells[y * this.row + x]   ^= Maze.EdgeBit[edg];
+            this.cells[zy * this.row + zx] ^= Maze.OppEdgeBit[edg];
 
             //console.log("In cell " + x.toFixed(0) + " " + y.toFixed(0) +
              //   " dissolving edge: " + this.EdgeStr[edg] + " into cell: " + zx.toFixed(0) + " " + zy.toFixed(0));
@@ -220,7 +220,7 @@ MAZE.Maze.prototype = {
      * @param edg
      */
     dissolveExit: function ( edg ) {
-        this.cells[this.seedY * this.row + this.seedX]   ^= MAZE.EdgeBit[edg];
+        this.cells[this.seedY * this.row + this.seedX]   ^= Maze.EdgeBit[edg];
     },
 
     /**
@@ -257,8 +257,8 @@ MAZE.Maze.prototype = {
             {
                 var mz = this.cells[i * this.row + j];
                 console.log(i.toFixed(0) + " " + j.toFixed(0) +
-                    " S: " + (mz & MAZE.SOUTH_BIT) + " W: " + (mz & MAZE.WEST_BIT) +
-                    " N: " + (mz & MAZE.NORTH_BIT) + " E: " + (mz & MAZE.EAST_BIT)  );
+                    " S: " + (mz & Maze.SOUTH_BIT) + " W: " + (mz & Maze.WEST_BIT) +
+                    " N: " + (mz & Maze.NORTH_BIT) + " E: " + (mz & Maze.EAST_BIT)  );
             }
     }
 };

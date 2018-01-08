@@ -18,7 +18,7 @@
 
     var startTime = performance.now();
 
-    var	maze = new MAZE.Maze( NCELLS, NCELLS, 0, 0 );
+    var	maze = new Maze.Maze( NCELLS, NCELLS, 0, 0 );
 
     maze.build();
 
@@ -36,7 +36,7 @@
 
     startTime = performance.now();
 
-    var rat = new MAZE.MazeRat( maze );
+    var rat = new MazeRat.MazeRat( maze );
 
     bPath = true;
     rat.initSolveObj(0x80, false, mazeEvent);
@@ -92,7 +92,7 @@
                 //    " S: " + (mz & MAZE.SOUTH_BIT) + " W: " + (mz & MAZE.WEST_BIT) +
                 //    " N: " + (mz & MAZE.NORTH_BIT) + " E: " + (mz & MAZE.EAST_BIT)  );
 
-                if  ((mz & MAZE.SOUTH_BIT) !== 0) {
+                if  ((mz & Maze.SOUTH_BIT) !== 0) {
                     ctx.beginPath();
                     ctx.moveTo(x,y);
                     ctx.lineTo(x + cellSize, y);
@@ -100,7 +100,7 @@
                     sKnt += 2;
                 }
 
-                if  ((mz & MAZE.WEST_BIT) !== 0) {
+                if  ((mz & Maze.WEST_BIT) !== 0) {
                     ctx.beginPath();
                     ctx.moveTo(x,y);
                     ctx.lineTo(x, y - cellSize);
@@ -108,7 +108,7 @@
                     sKnt += 2;
                 }
 
-                if  ((mz & MAZE.NORTH_BIT) !== 0) {
+                if  ((mz & Maze.NORTH_BIT) !== 0) {
                     ctx.beginPath();
                     ctx.moveTo(x, y - cellSize);
                     ctx.lineTo(x + cellSize, y - cellSize);
@@ -116,7 +116,7 @@
                     sKnt += 2;
                 }
 
-                if  ((mz & MAZE.EAST_BIT) !== 0) {
+                if  ((mz & Maze.EAST_BIT) !== 0) {
                     ctx.beginPath();
                     ctx.moveTo(x + cellSize, y);
                     ctx.lineTo(x + cellSize, y - cellSize);

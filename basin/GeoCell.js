@@ -6,7 +6,7 @@
  */
 
 var GEOCELL = {
-    revision: 'r01',
+    revision: '1.0'
 };
 
 BASIN.GeoCell = function () {
