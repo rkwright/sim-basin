@@ -5,12 +5,12 @@
  *
  */
 
-BASIN3D = {
+Basin3D = {
     revision : '2.0',
     MIN_ORDER : 3
 };
 
-BASIN3D.Basin3D = function ( nCells ) {
+Basin3D.Basin3D = function ( nCells ) {
 
     this.nCells = nCells;
     this.plane = null;
@@ -22,7 +22,7 @@ BASIN3D.Basin3D = function ( nCells ) {
     this.limits = {};
     this.streamMat =  new THREE.MeshLambertMaterial({color: 0x79a1d1});
     this.streamNet = new THREE.Group();
-    this.cylinderUtil = new GFX.CylinderUtil();
+    this.cylinderUtil = new CylinderUtil.CylinderUtil();
 
     this3D = this;
 
@@ -40,7 +40,7 @@ BASIN3D.Basin3D = function ( nCells ) {
 
 };
 
-BASIN3D.Basin3D.prototype = {
+Basin3D.Basin3D.prototype = {
 
     buildBasin: function( nCells ) {
         this.nCells = nCells;
@@ -53,11 +53,11 @@ BASIN3D.Basin3D.prototype = {
         this.limits = {};
         this.streamMat =  new THREE.MeshLambertMaterial({color: 0x79a1d1});
         this.streamNet = new THREE.Group();
-        this.cylinderUtil = new GFX.CylinderUtil();
+        this.cylinderUtil = new CylinderUtil.CylinderUtil();
 
         this3D = this;
 
-        this.basin = new BASIN.Basin(nCells);
+        this.basin = new Basin.Basin(nCells);
 
         this.basin.construct();
 
@@ -187,7 +187,7 @@ BASIN3D.Basin3D.prototype = {
         }
 
         this.limits.maxElev = maxElev;
-        this.limits.minOrder = maxOrder - BASIN3D.MIN_ORDER;
+        this.limits.minOrder = maxOrder - Basin3D.MIN_ORDER;
         this.limits.maxLen = maxLen;
         this.limits.maxRow  = maxRow;
         this.limits.minZ    = this.terrain[0][0].z;
@@ -228,27 +228,27 @@ BASIN3D.Basin3D.prototype = {
         var jt = j * 2 + 1;
         var eI, eJ;
 
-        if ((bounds & MAZE.SOUTH_BIT) === 0) {
-            eI = Math.max(i + MAZE.YEdge[MAZE.SOUTH], 0);
-            eJ = Math.max(j + MAZE.XEdge[MAZE.SOUTH], 0);
+        if ((bounds & Maze.SOUTH_BIT) === 0) {
+            eI = Math.max(i + Maze.YEdge[Maze.SOUTH], 0);
+            eJ = Math.max(j + Maze.XEdge[Maze.SOUTH], 0);
             this.terrain[it - 1][jt].y = (cell.chanElev + this.basin.geos[eI][eJ].chanElev) / 2;
         }
 
-        if ((bounds & MAZE.WEST_BIT) === 0) {
-            eI = Math.max(i + MAZE.YEdge[MAZE.WEST], 0);
-            eJ = Math.max(j + MAZE.XEdge[MAZE.WEST], 0);
+        if ((bounds & Maze.WEST_BIT) === 0) {
+            eI = Math.max(i + Maze.YEdge[Maze.WEST], 0);
+            eJ = Math.max(j + Maze.XEdge[Maze.WEST], 0);
             this.terrain[it][jt - 1].y = (cell.chanElev + this.basin.geos[eI][eJ].chanElev) / 2;
         }
 
-        if ((bounds & MAZE.NORTH_BIT) === 0) {
-            eI = Math.max(i + MAZE.YEdge[MAZE.NORTH], 0);
-            eJ = Math.max(j + MAZE.XEdge[MAZE.NORTH], 0);
+        if ((bounds & Maze.NORTH_BIT) === 0) {
+            eI = Math.max(i + Maze.YEdge[Maze.NORTH], 0);
+            eJ = Math.max(j + Maze.XEdge[Maze.NORTH], 0);
             this.terrain[it + 1][jt].y = (cell.chanElev + this.basin.geos[eI][eJ].chanElev) / 2;
         }
 
-        if ((bounds & MAZE.EAST_BIT) === 0) {
-            eI = Math.max(i + MAZE.YEdge[MAZE.EAST], 0);
-            eJ = Math.max(j + MAZE.XEdge[MAZE.EAST], 0);
+        if ((bounds & Maze.EAST_BIT) === 0) {
+            eI = Math.max(i + Maze.YEdge[Maze.EAST], 0);
+            eJ = Math.max(j + Maze.XEdge[Maze.EAST], 0);
             this.terrain[it][jt + 1].y = (cell.chanElev + this.basin.geos[eI][eJ].chanElev) / 2;
         }
     },
@@ -340,10 +340,10 @@ BASIN3D.Basin3D.prototype = {
      * See if the current direction from the cell already has a stream.
      */
     checkStreamBounds: function ( n, bounds ) {
-        return ((bounds & MAZE.SOUTH_BIT) === 0 && n === 0 ) ||
-               ((bounds & MAZE.WEST_BIT) === 0 && n === 2 ) ||
-               ((bounds & MAZE.NORTH_BIT) === 0 && n === 4 ) ||
-               ((bounds & MAZE.EAST_BIT) === 0 && n === 6 );
+        return ((bounds & Maze.SOUTH_BIT) === 0 && n === 0 ) ||
+               ((bounds & Maze.WEST_BIT) === 0 && n === 2 ) ||
+               ((bounds & Maze.NORTH_BIT) === 0 && n === 4 ) ||
+               ((bounds & Maze.EAST_BIT) === 0 && n === 6 );
     },
 
     /**

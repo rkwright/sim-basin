@@ -5,7 +5,7 @@
  *
  */
 
-var BASIN = {
+var Basin = {
             revision : '2.0',
             QNUMER   :  1.0,	// numerator of slope f(Q) eqn.
             QEXPON   : -0.15,    // exponent of slope f(Q) eqn
@@ -13,7 +13,7 @@ var BASIN = {
             RUGOSITY :  0.5     // degree of rugosity (channel interfluve height)
 };
 
-BASIN.GeoCell = function () {
+Basin.GeoCell = function () {
 
     this.order     = -1;	// stream order of this cell, -1 means not set
     this.area      = 1;     //  Init as 1 - every basin must be its own contributor!
@@ -27,7 +27,7 @@ BASIN.GeoCell = function () {
  * Constuctor
  */
 
-BASIN.Basin = function ( nCells ) {
+Basin.Basin = function ( nCells ) {
 
     this.nCells = nCells;
 
@@ -46,7 +46,7 @@ BASIN.Basin = function ( nCells ) {
     bthis = this;
 };
 
-BASIN.Basin.prototype = {
+Basin.Basin.prototype = {
 
     /**
      * Construct the catchment (maze) then walk the maze twice to
@@ -54,17 +54,17 @@ BASIN.Basin.prototype = {
      */
     construct: function () {
 
-        this.maze = new MAZE.Maze( this.nCells, this.nCells, 0, 0 );
+        this.maze = new Maze.Maze( this.nCells, this.nCells, 0, 0 );
 
         this.maze.build();
 
-        this.maze.dissolveExit( MAZE.WEST);
+        this.maze.dissolveExit( Maze.WEST);
 
         for ( var i = 0; i < this.maze.row; i++ ) {
             this.geos[i] = [];
 
             for ( var j = 0; j < this.maze.col; j++ ) {
-                this.geos[i][j] = new BASIN.GeoCell();
+                this.geos[i][j] = new Basin.GeoCell();
             }
         }
 
@@ -76,7 +76,7 @@ BASIN.Basin.prototype = {
      */
     traverseStreams: function () {
 
-        this.rat = new MAZE.MazeRat(this.maze);
+        this.rat = new MazeRat.MazeRat(this.maze);
 
         this.rat.initSolveObj(0x80, false, this.getMorphParms);
 
@@ -100,14 +100,14 @@ BASIN.Basin.prototype = {
         x0 = nexj - j + 1;
         y0 = nexi - i + 1;
 
-        curG.exit = MAZE.EdgeIndx[y0][x0];
+        curG.exit = Maze.EdgeIndx[y0][x0];
 
         // if this is a cul-de-sac, then init it to be 1, i.e. first order
         if ( bSac )
             curG.order = 1;
 
-        //curG.chanSlope = (BASIN.QNUMER / Math.pow( curG.area + BASIN.QINTCP, BASIN.QEXPON)) * bthis.elevScale;
-        curG.chanSlope = 1 / Math.pow( bthis.basinArea / curG.area, BASIN.QEXPON) * bthis.elevScale;
+        //curG.chanSlope = (Basin.QNUMER / Math.pow( curG.area + Basin.QINTCP, Basin.QEXPON)) * bthis.elevScale;
+        curG.chanSlope = 1 / Math.pow( bthis.basinArea / curG.area, Basin.QEXPON) * bthis.elevScale;
 
         if (nexG !== undefined) {
             nexG.area += curG.area;
@@ -146,7 +146,7 @@ BASIN.Basin.prototype = {
 
         if (bSac) {
             // save position in Sack list
-            bthis.firstOrder.push(MAZE.Coord(i, j));
+            bthis.firstOrder.push(Maze.Coord(i, j));
         }
 
         // chan_leng is the length of the mouse's current travels!
