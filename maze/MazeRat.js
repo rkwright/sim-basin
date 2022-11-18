@@ -111,7 +111,7 @@ MazeRat.MazeRat.prototype = {
                     this.bSac = false;
                     this.stack.push(new Maze.Coord(zx, zy));
 
-                    //this.report("    addStack",  px,  py,  zx,  zy,  this.stack.length, false);
+                    this.report("    addStack",  px,  py,  zx,  zy,  this.stack.length, false);
                 }
             }
 
@@ -230,7 +230,7 @@ MazeRat.MazeRat.prototype = {
      * @see com.geofx.example.erosion.MazeEvent#mazeEvent(int, int, int, int, int, boolean)
      */
     report: function (  description, posx, posy, msx, msy, stackDepth, bSac ) {
-        //console.info(description + " posx: " +  posx.toFixed(0) + "  posy: " + posy.toFixed(0) + " msx: " + msx.toFixed(0) +
-        //    " msy: " + msy.toFixed(0) + " depth: " + stackDepth.toFixed(0) + " bSac: " + bSac);
+        console.info(description + " posx: " +  posx.toFixed(0) + "  posy: " + posy.toFixed(0) + " msx: " + msx.toFixed(0) +
+            " msy: " + msy.toFixed(0) + " depth: " + stackDepth.toFixed(0) + " bSac: " + bSac);
     }
 };
